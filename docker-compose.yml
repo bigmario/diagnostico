@@ -8,8 +8,12 @@ services:
     container_name: php-sqlsrv-container
     ports:
       - "8080:80"
+    depends_on:
+      - sqlserver
     volumes:
       - .:/var/www/html/
+      - ./php-key.pem:/etc/ssl/private/php-key.pem
+      - ./php-cert.pem:/etc/ssl/certs/php-cert.pem
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -19,3 +23,6 @@ services:
       ACCEPT_EULA: Y
     ports:
       - "1433:1433"
+    volumes:
+      - ./sqlserver-key.pem:/etc/ssl/private/sqlserver-key.pem
+      - ./sqlserver-cert.pem:/etc/ssl/certs/sqlserver-cert.pem
