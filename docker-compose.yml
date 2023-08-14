@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-sqlsrv-container
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html/
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-container
+    environment:
+      SA_PASSWORD: YourStrong@Password
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
